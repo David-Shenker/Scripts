@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import simpledialog
 import matplotlib.pyplot as plt
 
 # Consts
@@ -14,7 +16,7 @@ def showChart(CSVFile):
 
 	plt.xlabel('formulaResult')
 	plt.ylabel('Number')
-	plt.title('3N+1')
+	plt.title(f'3N+1 for - {USER_INP}')
 	plt.plot(x, y, color = GREEN, linewidth = 0.5)
 	plt.show()
 
@@ -37,9 +39,18 @@ def formula(number: str) -> list:
 def createCSV(numbersToCheck):
 	return map(lambda number: formula(number), range(2, numbersToCheck))
 
+def getUsersInput() -> int:
+	ROOT = tk.Tk()
+	ROOT.withdraw()
+	global USER_INP
+	USER_INP = simpledialog.askinteger(title="3N+1 Simulator",
+										prompt="Please choose number to run with:")
+
+	return USER_INP
+
 def main() -> None:
 	print('-----------------  START ----------------')
-	numbersToCheck = 100
+	numbersToCheck = getUsersInput()
 	CSVFile = createCSV(numbersToCheck)
 	showChart(CSVFile)
 	print('-----------------  END ----------------')
