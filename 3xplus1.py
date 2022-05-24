@@ -1,9 +1,12 @@
 import tkinter as tk
 from tkinter import simpledialog
 import matplotlib.pyplot as plt
+from time import time
 
 # Consts
 GREEN = 'g'
+START = 'start'
+END = 'end'
 
 def showChart(CSVFile):
 	x = []
@@ -18,6 +21,8 @@ def showChart(CSVFile):
 	plt.ylabel('Number')
 	plt.title(f'3N+1 for - {USER_INP}')
 	plt.plot(x, y, color = GREEN, linewidth = 0.5)
+
+	runTime(END)
 	plt.show()
 
 def isEven(number: int) -> bool:
@@ -36,7 +41,7 @@ def formula(number: str) -> list:
 
 	return resultList
 
-def createCSV(numbersToCheck):
+def createCSV(numbersToCheck) -> list:
 	return map(lambda number: formula(number), range(2, numbersToCheck))
 
 def getUsersInput() -> int:
@@ -46,14 +51,24 @@ def getUsersInput() -> int:
 	USER_INP = simpledialog.askinteger(title="3N+1 Simulator",
 										prompt="Please choose number to run with:")
 
+	print(f'Claculating for {USER_INP} numbers')
 	return USER_INP
+
+def runTime(action: str) -> None:
+	if action == START:
+		global startTime
+		startTime = time()
+	elif action == END:
+		endTime = time()
+		print (f'Run Time = {endTime - startTime} seconds')
 
 def main() -> None:
 	print('-----------------  START ----------------')
 	numbersToCheck = getUsersInput()
+	runTime(START)
 	CSVFile = createCSV(numbersToCheck)
 	showChart(CSVFile)
-	print('-----------------  END ----------------')
+	print('-----------------  END -----------------')
 
 
 if __name__ == '__main__':
